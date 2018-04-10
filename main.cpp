@@ -20,7 +20,7 @@ class lsta_nlzada
 {
 public:
     nodo<U>* head;
-    lzta_nlzada()
+    lsta_nlzada()
     {
         head=0;
     }
@@ -29,31 +29,34 @@ public:
         if(head==0)
             return true;
         nd_ntrior=head;
-        int i=13     ;
-        if(head->valor==n)
-            return false;
+        int i=0;
+        if((head+i)->valor==n)
+                return false;
+        i++;
         while(nd_ntrior->next!=0){
             if((head+i)->valor==n)
                 return false;
             else if((head+i)->valor>n)
                 return true;
-            nd_ntrior=(head+i);
+            nd_ntrior=head+i;
             i++;
         }
         return true;
     }
     void insertar(U numero)
     {
-        nodo<U>* ptr_anterior;
+        nodo<U>* ptr_anterior=0;
         if(buscar(numero,ptr_anterior)==true)
         {
         nodo<U>* ptr = new nodo<U>(numero);
         if(head==0){
             head=ptr;
+            head->next=0;
             return;
         }
-        if(head->next==0){
-            head->next=ptr;
+        if(head->valor > ptr->valor){
+            ptr->next=head;
+            head=ptr;
             return;
         }
         if(ptr_anterior->next==0){
@@ -74,14 +77,14 @@ public:
             {
                 if(head->next==0)
                     delete head;
-                ptr_anterior=head->next;
+                ptr_anterior=head->next; //guarda el siguiente
                 delete head;
                 head=ptr_anterior;
             }
             if(ptr_anterior->next->next==0)
             {
                 delete ptr_anterior->next;
-                ptr_anterior.next=0;
+                ptr_anterior->next=0;
                 return;
             }
             nodo<U>* ptr=ptr_anterior->next;
@@ -92,6 +95,12 @@ public:
 };
 int main()
 {
-    cout << "Hello world!" << endl;
+    lsta_nlzada<int> lista;
+    //cout<<lista.head<<endl;
+    lista.insertar(1);
+    lista.insertar(0);
+
+    cout << lista.head->next << endl;
     return 0;
 }
+
