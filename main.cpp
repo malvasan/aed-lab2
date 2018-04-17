@@ -20,26 +20,21 @@ class lsta_nlzada
 {
 public:
     nodo<U>* head;
-    lsta_nlzada()
-    {
-        head=0;
-    }
-    bool buscar(U n,nodo<U>* nd_ntrior)
+    bool buscar(U n,nodo<U>*& nd_ntrior)
     {
         if(head==0)
             return true;
-        nd_ntrior=head;
-        int i=0;
-        if((head+i)->valor==n)
+        nodo<U>* nd_actual= head;
+        nd_ntrior=nd_actual;
+        if(nd_actual->valor==n)
                 return false;
-        i++;
         while(nd_ntrior->next!=0){
-            if((head+i)->valor==n)
+            if(nd_actual->valor==n)
                 return false;
-            else if((head+i)->valor>n)
+            else if(nd_actual->valor>n)
                 return true;
-            nd_ntrior=head+i;
-            i++;
+            nd_ntrior=nd_actual;
+            nd_actual=nd_actual->next;
         }
         return true;
     }
@@ -64,6 +59,8 @@ public:
             ptr->next=0;
             return;
         }
+        //cout<<ptr_anterior->next<<endl;
+        //cout<<ptr_anterior->valor<<endl;
         ptr->next=ptr_anterior->next;
         ptr_anterior->next=ptr;
         }
@@ -77,14 +74,14 @@ public:
             {
                 if(head->next==0)
                     delete head;
-                ptr_anterior=head->next; //guarda el siguiente
+                ptr_anterior=head->next;
                 delete head;
                 head=ptr_anterior;
             }
             if(ptr_anterior->next->next==0)
             {
                 delete ptr_anterior->next;
-                ptr_anterior->next=0;
+                ptr_anterior.next=0;
                 return;
             }
             nodo<U>* ptr=ptr_anterior->next;
@@ -96,11 +93,22 @@ public:
 int main()
 {
     lsta_nlzada<int> lista;
-    //cout<<lista.head<<endl;
+    lista.head=0;
     lista.insertar(1);
-    lista.insertar(0);
+    lista.insertar(2);
+    lista.insertar(3);
+    lista.insertar(5);
+    lista.insertar(4);
+     lista.insertar(0);
 
-    cout << lista.head->next << endl;
+    nodo<int>* ptr=lista.head;
+
+    for(int i=0;ptr!=0;i++){
+        cout<<ptr->valor<<endl;
+        ptr=ptr->next;
+    }
+
     return 0;
 }
+
 
