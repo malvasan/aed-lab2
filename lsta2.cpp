@@ -47,8 +47,23 @@ bool lista<U>::borrar(U x)
     *p=(*p)->next;
     delete pr;
 }
+template <class U>
+bool lista<U>::imprimir()
+{
+    for(lista<U>* o=head;o;o++){
+        cout<<*o<<endl;
+    }
+}
+template <class U>
+lista<U>::~lista();
+{
+    lista<U>* ptr2=&head;
+    for(lista<U>** ptr1=&(ptr2->next);ptr2;ptr1=&(ptr2->next))
+        delete prt2;
+}
 int main()
 {
     cout << "Hello world!" << endl;
     return 0;
 }
+
