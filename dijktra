@@ -1,0 +1,133 @@
+#include <iostream>
+#include <vector>
+#include <list>
+using namespace std;
+
+template<class U>
+struct ascendente
+{
+	bool cmp(U a ,U b)
+	{
+		if(a<b)
+			return 1;
+		return 0;
+	}
+};
+template<class U>
+struct descendente
+{
+	bool cmp(U a ,U b)
+	{
+		if(a>b)
+			return 1;
+		return 0;
+	}
+};
+
+template <class G>
+struct CEdge
+{
+	typedef typename G::Node Node;
+	typedef typename G::E       E;
+
+	E m_data;
+	Node* m_nodos[2];
+	bool m_dir;
+	CEdge(E dato)
+	{
+	    m_data=dato;
+	}
+};
+template <class G>
+struct CNode
+{
+	typedef typename G::Edge Edge;
+	typedef typename G::N       N;
+
+	N m_data;
+	list<Edge* > m_edges;//list<int>::iterator it;
+	CNode(N dato)
+	{
+	   m_data=dato;
+	}
+};
+template<class N,class E>
+class CGraph
+{
+public:
+    typedef typename CGraph<N,E> self;
+    typedef typename CNode<self> Node;
+    typedef typename CEdge<self> Edge;
+    typedef typename N              N;
+    typedef typename E              E;
+
+    vector<Node* > m_nodes;
+	CGraph();
+	bool InsNode(N n);
+    bool InsEdge(Node* A,Node* B,E e,bool d);
+	bool RemEdge(Node* A,Node* B,E e);
+	bool RemNode(Node A);
+private:
+	Node buscar(Node A);
+};
+/*
+template<class N,class E>
+Node* CGraph::buscar(Node A)
+{
+    for(int i=0;i<m_nodes.size();i++){
+
+    }
+
+}
+*/
+template<class N,class E>
+bool CGraph::InsNode(N n)
+{
+    Node* p=new Node(n);
+    m_nodes.push_back(p);
+}
+template<class N,class E>
+bool CGraph::InsEdge(Node* A,Node* B,E e,bool d)
+{
+    Edge* p=new Edge(e);
+    p.m_nodos[0]=A;
+    p.m_nodos[1]=B;
+    p.m_dir=d;
+    A->m_edges.push_back(p);
+    B->m_edges.push_back(p);
+}
+template<class N,class E>
+bool CGraph::RemEdge(Node* A,Node* B,E e)
+{
+    A->m_edges.push_back(p);
+    B->m_edges.push_back(p);
+}
+int main()
+{
+	CArbol<int,ascendente<int> > arbol;
+	//arbol.insertar(55);
+	//arbol.insertar(33);
+	//arbol.insertar(88);
+	//arbol.insertar(12);
+	// arbol.insertar(47);
+	arbol.insertar(1);
+	//arbol.insertar(98);
+	arbol.insertar(8);
+	arbol.insertar(3);
+	arbol.insertar(7);
+	arbol.insertar(2);
+	arbol.insertar(9);
+	arbol.insertar(5);
+	arbol.insertar(6);
+	arbol.insertar(4);
+	//arbol.insertar(78);
+	//arbol.insertar(9);
+	// arbol.insertar(35);
+	//arbol.insertar(40);
+	//arbol.borrar(81);
+	arbol.borrar(3);
+	arbol.borrar(1);
+	cout<<endl;
+	arbol.imprimir(arbol.raiz, 0);
+	return 0;
+}
