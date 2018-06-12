@@ -44,7 +44,7 @@ public:
 	bool insertar(U x);
 	bool borrar(U x);
 	CNode<U>** Rep(CNode<U>** ptr);
-	void imprimir(CNode<U>* p);
+	void imprimir(CNode<U>* p, int cont);
 	V comparador;
 	CNode<U>* raiz;
 	vector<CNode<U>**> recorrido;
@@ -105,12 +105,21 @@ bool CArbol<U,V>::borrar(U x)
 	return 1;
 }
 template<class U,class V>
-void CArbol<U,V>::imprimir(CNode<U>* p)
+void CArbol<U,V>::imprimir(CNode<U>* p,int cont)
 {
+    /*
 	if(!p) return ;
 	imprimir(p->nodos[0]);
 	cout<<p->nodos[0]<<"  "<<p<<"  "<<p->nodos[1]<<"   "<<p->n_valor<<endl;
 	imprimir(p->nodos[1]);
+	*/
+	if(!p) return;
+	imprimir(p->nodos[1],cont+1);
+	for(int i=0;i<cont;i++){
+        cout<<"   ";
+	}
+	cout<<p->n_valor<<endl;
+	imprimir(p->nodos[0],cont+1);
 }
 template<class U,class V>
 void CArbol<U,V>::balancear(vector<CNode<U>** > arr)
@@ -215,6 +224,6 @@ int main()
 	// arbol.insertar(35);
 	//arbol.insertar(40);
 	//arbol.borrar(81);
-	arbol.imprimir(arbol.raiz);
+	arbol.imprimir(arbol.raiz, 0);
 	return 0;
 }
